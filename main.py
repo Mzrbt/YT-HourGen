@@ -31,6 +31,8 @@ def main():
 
     print(f"[✅ DONE] 1-hour {args.format.upper()} created at: {output_path}")
 
+    
+    
 
 if __name__ == "__main__":
     if not os.path.exists(ASSETS_DIR):
