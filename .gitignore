@@ -5,6 +5,7 @@ __pycache__/
 *.pyd
 venv/
 env/
+*.mp4
 
 # Editor directories and files
 .vscode/
