@@ -36,6 +36,26 @@
 Install dependencies:
  
 ```bash
- 
 pip install -r requirements.txt
+
+```
+
+# WARNING
+You need to create a virutal environnement located on the project folder to download pytube on __Linux / Mac OS__. Execute the following prompt :
+
+```bash
+python3 -m venv venv
+source source venv/bin/activate
+
+```
+
+You should get something like this :
+
+```bash
+
+(venv) mzrbt@Marin:~/YT-HourGen$
+
+```
+
+
  
