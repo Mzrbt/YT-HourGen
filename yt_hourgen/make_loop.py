@@ -5,6 +5,7 @@ import os
 path = "../assets"
 
 ##### FONCTION TO LOOP A VIDEO ####
+
 def loop_video(input_path: str, output_path: str, duration: int = 3600):
 
     clip = VideoFileClip(input_path)
@@ -39,7 +40,17 @@ while True:
     except ValueError:
         print("Invalid input. Please enter a number.")
 
+while True:
+    try:
+        duration = int(input("Enter loop duration in seconds (e.g., 3600 for 1 hour): "))
+        if duration > 0:
+            break
+        else:
+            print("Duration must be a positive number.")
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+
 video_path = os.path.join(path, filename)
 output_filename = os.path.splitext(filename)[0] + "_1h.mp4"
 output_video_path = os.path.join(path, output_filename)
-loop_video(video_path, output_video_path, duration=3600)
+loop_video(video_path, output_video_path, duration=duration)
