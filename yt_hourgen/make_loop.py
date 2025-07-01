@@ -4,6 +4,22 @@ import os
 
 path = "../assets"
 
+##### FONCTION TO LOOP A VIDEO ####
+def loop_video(input_path: str, output_path: str, duration: int = 3600):
+
+    clip = VideoFileClip(input_path)
+
+    target_duration = duration
+    n_loops = int(target_duration // clip.duration) + 1
+
+    final_clip = concatenate_videoclips([clip] * n_loops).subclip(0, target_duration)
+
+    final_clip.write_videofile(output_path, codec='libx264', audio_codec='aac')
+
+    print(f"Video has been looped and saved as {output_filename} in {output_path}.")
+
+###################################
+
 video_files = [f for f in os.listdir(path) if f.endswith('.mp4')]
 if not video_files:
     raise FileNotFoundError("No video files found in the specified directory.")
@@ -26,14 +42,4 @@ while True:
 video_path = os.path.join(path, filename)
 output_filename = os.path.splitext(filename)[0] + "_1h.mp4"
 output_video_path = os.path.join(path, output_filename)
-
-clip = VideoFileClip(video_path)
-
-target_duration = 3600
-n_loops = int(target_duration // clip.duration) + 1
-
-final_clip = concatenate_videoclips([clip] * n_loops).subclip(0, target_duration)
-
-final_clip.write_videofile(output_video_path, codec='libx264', audio_codec='aac')
-
-print(f"Video has been looped and saved as {output_filename} in {path}.")
+loop_video(video_path, output_video_path, duration=3600)
