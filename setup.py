@@ -1,17 +1,31 @@
 from setuptools import setup, find_packages
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(
-    name='YT-HourGen',  # Le nom de ton projet
-    version='0.1',  # Version initiale
-    packages=['yt_hourgen'],  # Pour inclure tous les packages dans le répertoire
-    install_requires=[  # Les dépendances nécessaires
-        'pytube',  # Exemple, tu peux ajouter ici toutes les dépendances listées dans requirements.txt
+    name='yt-hourgen',
+    version='1.0.0',
+    author='Mzrbt',
+    description='Generate 1-hour looped videos from YouTube',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url='https://github.com/Mzrbt/YT-HourGen',
+    packages=find_packages(),
+    install_requires=[
+        'yt-dlp',
         'moviepy',
     ],
-    entry_points={  # Permet de définir une commande dans le terminal
+    entry_points={
         'console_scripts': [
-            'yt-hourgen=yt_hourgen.main:main',  # Cette ligne permet d'exécuter `yt-hourgen` depuis le terminal
+            'yt-hourgen=main:main',
         ],
     },
-    include_package_data=True,  # Permet d'inclure les fichiers supplémentaires (comme assets)
+    classifiers=[
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.12',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+    ],
+    python_requires='>=3.12',
 )

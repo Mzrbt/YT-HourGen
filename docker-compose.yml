@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  yt-hourgen:
+    build: .
+    image: yt-hourgen/latest
+    container_name: yt_hourgen
+    volumes:
+      - ./assets:/app/assets
+    environment:
+      - PYTHONUNBUFFERED=1
+    stdin_open: true
+    tty: true

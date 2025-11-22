@@ -20,19 +20,14 @@ def main():
 
     print(f"[INFO] Downloading video from {args.url} in {args.format.upper()} format...")
 
-    # Step 1: Download video/audio
     downloaded_path = download_video(args.url, args.format)
 
     print(f"[INFO] Downloaded to: {downloaded_path}")
     print("[INFO] Processing to create a 1-hour file...")
 
-    # Step 2: Make 1 hour version
     output_path = make_video_one_hour(downloaded_path, args.format, ASSETS_DIR)
 
     print(f"[✅ DONE] 1-hour {args.format.upper()} created at: {output_path}")
-
-    
-    
 
 if __name__ == "__main__":
     if not os.path.exists(ASSETS_DIR):
