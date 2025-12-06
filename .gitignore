@@ -22,3 +22,7 @@ Thumbs.db
 *.tmp
 *.bak
 *.swp
+
+# Project
+mod.txt
+assets/*.mp4

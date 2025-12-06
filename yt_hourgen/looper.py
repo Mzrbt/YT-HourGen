@@ -1,12 +1,16 @@
 import subprocess
 import os
 import sys
-from moviepy import VideoFileClip
+from moviepy import VideoFileClip, AudioFileClip # type: ignore
 
 
 def loop_video_fast(input_path: str, output_path: str, duration: int = 3600):
     
-    clip = VideoFileClip(input_path)
+    if input_path.endswith('.mp3'):
+        clip = AudioFileClip(input_path)
+    else:
+        clip = VideoFileClip(input_path)
+    
     source_duration = clip.duration
     clip.close()
     
