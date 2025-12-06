@@ -1,4 +1,4 @@
-import yt_dlp
+import yt_dlp # type: ignore
 import os
 
 def download_video(url: str, format_type: str = "mp4") -> str:
