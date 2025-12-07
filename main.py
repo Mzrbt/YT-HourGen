@@ -1,7 +1,7 @@
 import argparse
 import os
 from yt_hourgen.downloader import download_video
-from yt_hourgen.looper import make_video_one_hour
+from yt_hourgen.looper import loop_video
 
 ASSETS_DIR = "assets"
 
@@ -16,25 +16,25 @@ def main():
         default="mp4",
         help="Output format: mp3 (audio only) or mp4 (video). Default: mp4"
     )
-    """ parser.add_argument(
+    parser.add_argument(
         "-d", "--duration",
         type=int,
         default=3600,
         help="Target the duration in seconds. Default: 3600s (= 1 hour)"
     )
-    """
+    
     args = parser.parse_args()
 
-    print(f"\033[0;33m[INFO]\033[0m Downloading video from {args.url} in {args.format.upper()} format...")
+    print(f"\033[0;33m[INFO]\033[0m Downloading video from {args.url} in {args.format.upper()} format for {args.duration} seconds...")
 
     downloaded_path = download_video(args.url, args.format)
 
     print(f"\033[0;33m[INFO]\033[0m Downloaded to: {downloaded_path}")
-    print(f"\033[0;33m[INFO]\033[0m Processing to create a 1-hour file...")
+    print(f"\033[0;33m[INFO]\033[0m Processing to create a {args.duration}-seconds file...")
 
-    output_path = make_video_one_hour(downloaded_path, args.format, ASSETS_DIR)
+    output_path = loop_video(downloaded_path, args.format, args.duration, ASSETS_DIR)
 
-    print(f"\033[0;32m[DONE]\033[0m 1-hour {args.format.upper()} created at: {output_path}")
+    print(f"\033[0;32m[DONE]\033[0m {args.duration}-seconds {args.format.upper()} created at: {output_path}")
 
 if __name__ == "__main__":
     if not os.path.exists(ASSETS_DIR):

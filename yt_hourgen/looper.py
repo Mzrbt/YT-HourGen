@@ -3,8 +3,7 @@ import os
 import sys
 from moviepy import VideoFileClip, AudioFileClip # type: ignore
 
-
-def loop_video_fast(input_path: str, output_path: str, duration: int = 3600):
+def loop_video_fast(input_path: str, output_path: str, duration: int, format_type: str):
     
     if input_path.endswith('.mp3'):
         clip = AudioFileClip(input_path)
@@ -26,24 +25,40 @@ def loop_video_fast(input_path: str, output_path: str, duration: int = 3600):
         for _ in range(n_loops):
             f.write(f"file '{os.path.abspath(input_path)}'\n")
     
+    
     try:
-        process = subprocess.Popen([
-            "ffmpeg",
-            "-f", "concat",
-            "-safe", "0",
-            "-i", concat_file,
-            "-t", str(duration),
-            "-c:v", "libx264",
-            "-preset", "ultrafast",
-            "-crf", "23",
-            "-c:a", "aac",
-            "-b:a", "192k",
-            "-movflags", "+faststart",
-            "-progress", "pipe:1",
-            output_path,
-            "-y"
-        ], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
-        
+        if input_path.endswith('.mp4'):
+            process = subprocess.Popen([
+                "ffmpeg",
+                "-f", "concat",
+                "-safe", "0",
+                "-i", concat_file,
+                "-t", str(duration),
+                "-c:v", "libx264",
+                "-preset", "ultrafast",
+                "-crf", "23",
+                "-c:a", "aac",
+                "-b:a", "192k",
+                "-movflags", "+faststart",
+                "-progress", "pipe:1",
+                output_path,
+                "-y"
+            ], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+        else:
+            process = subprocess.Popen([
+                "ffmpeg",
+                "-f", "concat",
+                "-safe", "0",
+                "-i", concat_file,
+                "-t", str(duration),
+                "-c:a", "libmp3lame",
+                "-b:a", "192k",
+                "-movflags", "+faststart",
+                "-progress", "pipe:1",
+                output_path,
+                "-y"
+            ], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+
         last_time = 0
         last_progress = 0
         
@@ -109,12 +124,11 @@ def loop_video_fast(input_path: str, output_path: str, duration: int = 3600):
             os.remove(output_path)
         raise
 
-
-def make_video_one_hour(input_path: str, format_type: str, output_dir: str) -> str:
+def loop_video(input_path: str, format_type: str, duration: int, output_dir: str) -> str:
     filename = os.path.basename(input_path)
-    output_filename = os.path.splitext(filename)[0] + "_1h.mp4"
+    output_filename = os.path.splitext(filename)[0] + f"_{duration}s.{format_type}"
     output_path = os.path.join(output_dir, output_filename)
     
-    loop_video_fast(input_path, output_path, duration=3600)
+    loop_video_fast(input_path, output_path, duration, format_type)
     
     return output_path
