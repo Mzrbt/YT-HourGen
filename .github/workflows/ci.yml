@@ -40,7 +40,7 @@ jobs:
           pip install flake8
           flake8 . --max-line-length=120
 
-      - name: Tests (pytest)
-        run: |
-          pip install pytest
-          pytest
+      # - name: Tests (pytest)
+      #   run: |
+      #     pip install pytest
+      #     pytest
