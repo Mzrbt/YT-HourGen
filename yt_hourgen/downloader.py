@@ -1,5 +1,6 @@
 import yt_dlp
 
+
 def download_video(url: str, format_type: str = "mp4") -> str:
     if format_type == "mp3":
         ydl_opts = {
@@ -21,13 +22,13 @@ def download_video(url: str, format_type: str = "mp4") -> str:
             'noplaylist': True,
             'extractor_args': {'youtube': {'player_client': ['default']}},
         }
-    
+
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=True)
-        
+
         if format_type == "mp3":
             filename = ydl.prepare_filename(info).rsplit('.', 1)[0] + '.mp3'
         else:
             filename = ydl.prepare_filename(info)
-        
+
         return filename
