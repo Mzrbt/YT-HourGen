@@ -28,4 +28,4 @@ mod.txt
 assets/*.mp4
 
 concat_list.txt
-files.txt
+files.md
