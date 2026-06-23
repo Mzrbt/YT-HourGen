@@ -40,7 +40,12 @@ def main():
         f"{args.duration}-seconds file..."
     )
 
-    output_path = loop_video(downloaded_path, args.format, args.duration, ASSETS_DIR)
+    output_path = loop_video(
+        downloaded_path,
+        args.format,
+        args.duration,
+        ASSETS_DIR,
+    )
 
     print(
         f"\033[0;32m[DONE]\033[0m {args.duration}-seconds "

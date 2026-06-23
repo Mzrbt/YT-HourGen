@@ -5,8 +5,8 @@ import sys
 from moviepy import AudioFileClip, VideoFileClip  # type: ignore
 
 
-def loop_video_fast(input_path: str, output_path: str, duration: int):
-    if input_path.endswith(".mp3"):
+def loop_video_fast(input_path: str, output_path: str, duration: int, format_type: str):
+    if format_type == "mp3":
         clip = AudioFileClip(input_path)
     else:
         clip = VideoFileClip(input_path)
@@ -27,7 +27,7 @@ def loop_video_fast(input_path: str, output_path: str, duration: int):
             file_handle.write(f"file '{os.path.abspath(input_path)}'\n")
 
     try:
-        if input_path.endswith(".mp4"):
+        if format_type == "mp4":
             process = subprocess.Popen(
                 [
                     "ffmpeg",
@@ -53,8 +53,8 @@ def loop_video_fast(input_path: str, output_path: str, duration: int):
                     "+faststart",
                     "-progress",
                     "pipe:1",
-                    output_path,
                     "-y",
+                    output_path,
                 ],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -80,8 +80,8 @@ def loop_video_fast(input_path: str, output_path: str, duration: int):
                     "+faststart",
                     "-progress",
                     "pipe:1",
-                    output_path,
                     "-y",
+                    output_path,
                 ],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -157,6 +157,6 @@ def loop_video(input_path: str, format_type: str, duration: int, output_dir: str
     output_filename = os.path.splitext(filename)[0] + f"_{duration}s.{format_type}"
     output_path = os.path.join(output_dir, output_filename)
 
-    loop_video_fast(input_path, output_path, duration)
+    loop_video_fast(input_path, output_path, duration, format_type)
 
     return output_path

@@ -16,7 +16,7 @@ def download_video(url: str, format_type: str = "mp4") -> str:
         }
     else:
         ydl_opts = {
-            'format': 'bestvideo+bestaudio/best',
+            'format': 'bestvideo+bestaudio',
             'merge_output_format': 'mp4',
             'outtmpl': 'assets/%(title).50s.%(ext)s',
             'noplaylist': True,
@@ -25,10 +25,4 @@ def download_video(url: str, format_type: str = "mp4") -> str:
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=True)
-
-        if format_type == "mp3":
-            filename = ydl.prepare_filename(info).rsplit('.', 1)[0] + '.mp3'
-        else:
-            filename = ydl.prepare_filename(info)
-
-        return filename
+        return ydl.prepare_filename(info)
